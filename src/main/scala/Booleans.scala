@@ -1,5 +1,5 @@
 object Booleans extends App{
-  println("Helo Booleans")
+  println("Hello, Booleans")
   val isLate = true
   val isSunny = false
 
@@ -22,6 +22,6 @@ object Booleans extends App{
   println(myChar == anotherChar)
 
   val anotherName = "Ela"
-  println((myName < anotherName)) //Ela < Ele in ascii/unicode tables
+  println(myName < anotherName) //Ela < Ele in ascii/unicode tables
 }
 
