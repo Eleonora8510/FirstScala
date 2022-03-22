@@ -14,8 +14,7 @@ object TreesAssignment extends App {
       if (nameLength >= height) {
         charsToPrint += nameString.substring(0, height-1).toUpperCase
         charsToPrint
-      }
-      else {
+      } else {
         val wholePart = Math.round(height / nameLength)
         val reminder = height % nameLength
         charsToPrint += (nameString * wholePart + nameString.substring(0, reminder - 1)).toUpperCase
