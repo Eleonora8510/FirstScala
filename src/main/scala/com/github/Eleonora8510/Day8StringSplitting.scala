@@ -2,20 +2,20 @@ package com.github.Eleonora8510
 
 import scala.util.Random
 
-object Day8StringSplitting extends App{
+object Day8StringSplitting extends App {
   println("Let's split some strings!")
   val greeting = "Welcome to Riga which is a port city. Klaipeda is also a port city"
   val food = "potatoes"
   val foodSeq = food.toCharArray
   println(foodSeq.mkString(","))
-  println(food(3),foodSeq(3)) //4th letter
+  println(food(3), foodSeq(3)) //4th letter
 
   val words = greeting.split(" ")
   println(words.mkString(","))
   val newGreeting = words.mkString(",")
-  val wordsLengths = for (word <- words) yield  word.length
+  val wordsLengths = for (word <- words) yield word.length
   wordsLengths.foreach(println)
-  for ((word, wordsLengths)<-words zip wordsLengths){
+  for ((word, wordsLengths) <- words zip wordsLengths) {
     println((s"Word $word is $wordsLengths characters long"))
   }
 
@@ -35,6 +35,6 @@ object Day8StringSplitting extends App{
   val uniqueWords = words.distinct // no duplicates
   println(uniqueWords.mkString(" "))
 
-  val diceThrows = for (_ <- 1 to 100 ) yield Random.nextInt(6)+1
-  println(diceThrows.take(10)mkString(","))
+  val diceThrows = for (_ <- 1 to 100) yield Random.nextInt(6) + 1
+  println(diceThrows.take(10) mkString (","))
 }

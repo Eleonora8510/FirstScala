@@ -34,7 +34,7 @@ class Rap(val title: String = "", val author: String= "", val lyrics:Array[Strin
   extends Song(title: String, author: String, lyrics:Array[String]) {
   def breakIt():Unit = {
     println("*"*50)
-    println(s"Rap of $author '$title' ")
+    println(s"com.github.Eleonora8510.Rap of $author '$title' ")
     println("*"*50)
 
     if ((maxLines == -1)||(maxLines > lyrics.length)){

@@ -18,11 +18,12 @@ object Day14noApp {
       case e: Exception => 0
     }
   }
+
   var myResult = 0
 
-  def main(args:Array[String]):Unit={
+  def main(args: Array[String]): Unit = {
     println("Starting main function")
-    for (arg <- args){
+    for (arg <- args) {
       println(s"Going to do something with argument: $arg type is ${arg.getClass}")
     }
     myResult += args(2).toInt

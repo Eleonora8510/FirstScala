@@ -1,7 +1,7 @@
 package com.github.Eleonora8510
 
 trait Read {
-  val readType = "Read"
+  val readType = "com.github.Eleonora8510.Read"
   val gender = "m"
   def read(name:String){
     println(name+" is reading")
@@ -9,7 +9,7 @@ trait Read {
 }
 
 trait Listen {
-  val listenType = "Listen"
+  val listenType = "com.github.Eleonora8510.Listen"
   val gender = "m"
   def listen(name:String){
     println(name + " is listenning")

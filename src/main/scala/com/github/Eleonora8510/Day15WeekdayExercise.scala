@@ -2,8 +2,8 @@ package com.github.Eleonora8510
 
 import scala.io.StdIn.readLine
 
-object Day15WeekdayExercise extends App{
-  def getDay(day: Int): String = day match{
+object Day15WeekdayExercise extends App {
+  def getDay(day: Int): String = day match {
     case 1 => "Monday"
     case 2 => "Tuesday"
     case 3 => "Wednesday"
@@ -14,7 +14,7 @@ object Day15WeekdayExercise extends App{
     case _ => "Unknown weekday"
   }
 
-  def getDayType(day: String): String = day.capitalize match{
+  def getDayType(day: String): String = day.capitalize match {
     case "Monday" | "Tuesday" | "Wednesday" | "Tuesday" | "Friday" => "workday"
     case "Saturday" | "Sunday" => "weekend"
     case _ => "miserable day"

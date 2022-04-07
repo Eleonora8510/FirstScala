@@ -1,9 +1,9 @@
 package com.github.Eleonora8510
 
-object Day13CaseClasses extends App{
+object Day13CaseClasses extends App {
   println("Using case classes")
   val me = Person("Eleonora", "myself", 180) // for case classes new is not needed
-  val sunflower = new Flower("sunflower","yellow")
+  val sunflower = new Flower("sunflower", "yellow")
   //val anotherFlower = sunflower.clone()
   println(me)
   // we also gain ability to pattern match by using case classes but about that later
@@ -21,14 +21,13 @@ object Day13CaseClasses extends App{
 
   val ede = Person("Ede", "daughter", 300)
   println(ede)
- // ede.name = "Valdis" // not possible since properties in case class are val by default
+  // ede.name = "Valdis" // not possible since properties in case class are val by default
   ede.topSpeed = 400 // fine to mutate since I specified var in case class definition
   println(ede)
 
 
   // so mostly case classes are all about convenience
   // often a case class instance (object)  will correspond an entry/row in a database, table etc.
-
 
 
 }

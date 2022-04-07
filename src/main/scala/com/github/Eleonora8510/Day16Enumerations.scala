@@ -13,7 +13,7 @@ object Fingers extends Enumeration {
 //}
 //
 //def twoLongest() =
-//  Fingers.values.toList.filter(finger => finger == Middle || finger == Index)
+//  com.github.Eleonora8510.Fingers.values.toList.filter(finger => finger == Middle || finger == Index)
 //
 object Day16Enumerations extends App{
   println("Let's have some fun with enumerations.")

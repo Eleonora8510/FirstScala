@@ -1,15 +1,15 @@
 package com.github.Eleonora8510
 
-object Day10Maps extends App{
+object Day10Maps extends App {
   // Maps are a type of data structure holding a collection of key -> value pairs
   val myNumbers = (0 to 10).toArray
   println(myNumbers(3))
   println(myNumbers.mkString(","))
 
   //by default map is immutable
-  val myFavorites = Map(("food", "potatoes"), ("car", "vw"), ("color","green"),("shirt","green"), ("salad","green"))
+  val myFavorites = Map(("food", "potatoes"), ("car", "vw"), ("color", "green"), ("shirt", "green"), ("salad", "green"))
   println(myFavorites.mkString(","))
-  val anotherMap = Map("cats"->5, "dogs"->3, "kids"->3,"cars"->1)
+  val anotherMap = Map("cats" -> 5, "dogs" -> 3, "kids" -> 3, "cars" -> 1)
   println(s"I have ${anotherMap("cats")} cats")
 
   //so if I know the key i can get the value out instantly - even when we have billions of items
@@ -19,7 +19,7 @@ object Day10Maps extends App{
   //  // //so it would be useful only if numbers tend to jump around with BIG gaps
   //
 
-  val numericMap = Map(100->"heroes", 300->"Spartans", 9000->"enough", 9001 -> "too much",
+  val numericMap = Map(100 -> "heroes", 300 -> "Spartans", 9000 -> "enough", 9001 -> "too much",
     2_000_000 -> "even more so")
   println(numericMap(300))
   println(numericMap(2_000_000))
@@ -32,7 +32,7 @@ object Day10Maps extends App{
 
   //val myKey = "food" // this could be coming in from readLine or outside
   val myKey = "drink"
-  if (myFavorites.contains(myKey)){
+  if (myFavorites.contains(myKey)) {
     println(s"Key $myKey ->${myFavorites(myKey)}")
   } else {
     println(s"Sorry no key $myKey found")
@@ -42,11 +42,11 @@ object Day10Maps extends App{
   println(s"Key $myKey -> $myValue")
 
   //so we can loop/iterate through both key and value at the same time
-  for ((key,value)<- myFavorites){
+  for ((key, value) <- myFavorites) {
     println(s"My key : $key maps to -> $value")
   }
 
-  val myValues = for ((_, value)<- myFavorites) yield value //I am using _ to indicate that key is not needed
+  val myValues = for ((_, value) <- myFavorites) yield value //I am using _ to indicate that key is not needed
   println(myValues)
   val myValuesTo = myFavorites.values // same thing as above
 
@@ -56,11 +56,11 @@ object Day10Maps extends App{
 
 
   //  //I can filter values out of one Map into another
-  val greenMap = for ((key,value) <- myFavorites if (value == "green")) yield (key,value)
+  val greenMap = for ((key, value) <- myFavorites if (value == "green")) yield (key, value)
   println(greenMap.mkString(","))
   println(greenMap)
 
-  val greenKeys = (for ((key,value) <- myFavorites if (value == "green")) yield key).toArray
+  val greenKeys = (for ((key, value) <- myFavorites if (value == "green")) yield key).toArray
   println(greenKeys.mkString(","))
   //
   //  //about getting Values, what do we do if we are not sure
@@ -83,18 +83,18 @@ object Day10Maps extends App{
   //https://www.baeldung.com/scala/option-type
 
   //  //we can convert Sequences(Arrays etc) of two values(tuples) into Maps
-  val mySeq = Seq(("one",10), ("two",20), ("three", 30), ("two", 2020))
+  val mySeq = Seq(("one", 10), ("two", 20), ("three", 30), ("two", 2020))
   val myMap = mySeq.toMap //so here the first two will be gone and overwritten by 2nd "two"
   println(mySeq)
   println(mySeq(1))
   println(myMap)
   //
-  for(((key,value), index) <- myMap.zipWithIndex) println(s"Item No.$index with $key -> $value") //zero based index
+  for (((key, value), index) <- myMap.zipWithIndex) println(s"Item No.$index with $key -> $value") //zero based index
   //
   //  //we can skip the option part and use getOrElse immediately
-    val againBadKeyLookup = myMap.getOrElse("some non existent key", "no key found sorry!").toString
-    println(againBadKeyLookup)
-    println(myMap.getOrElse("two", "hmm no two found?"))
+  val againBadKeyLookup = myMap.getOrElse("some non existent key", "no key found sorry!").toString
+  println(againBadKeyLookup)
+  println(myMap.getOrElse("two", "hmm no two found?"))
   //
   //  //so since Maps are immutable by default we will need to create a new map if we to add some elements
   //  //https://alvinalexander.com/scala/how-to-add-update-remove-elements-immutable-maps-scala/
@@ -121,11 +121,11 @@ object Day10Maps extends App{
   //
   //  //I can create a map out of Array with some yield fun
   // val squareMap = for(n <- myNumbers) yield (n,n*n) //not such a great Map because indexed Sequence(Array ) would be fine
-  val squareMap = (for (n <- myNumbers) yield (s"Number $n squared",n*n)).toMap //there is no specific order
+  val squareMap = (for (n <- myNumbers) yield (s"Number $n squared", n * n)).toMap //there is no specific order
   println(squareMap)
   //
   //  //we could also use map to create Maps (yield actually calls map underneath
-  val squareArray = myNumbers.map(n => (s"Number $n squared", n*n))
+  val squareArray = myNumbers.map(n => (s"Number $n squared", n * n))
   val squareMapAgain = squareArray.toMap //we could have called toMap immediately in the line above
 
   println(squareArray.length)
@@ -146,19 +146,19 @@ object Day10Maps extends App{
   println(muteMap)
   muteMap("birds") += 987 //so I am updating the value of key "birds" by adding to previous value (452 in this example)
   println(muteMap)
-  muteMap("kids") = muteMap("kids")*10 //same as  muteMap("kids") *= 10
+  muteMap("kids") = muteMap("kids") * 10 //same as  muteMap("kids") *= 10
   println(muteMap)
   //
   //  //I can remove multiple key value pairs by specifying a sequence of keys
-    muteMap --= Seq("birds", "cats") //List or Array would work too
-    println(muteMap)
+  muteMap --= Seq("birds", "cats") //List or Array would work too
+  println(muteMap)
   // ********************************************************
-//  val o1: Option[Int] = Some(10)
-//  assert(o1.map(_.toString).contains("10"))
-// println(assert(o1.map(_ * 2.0).contains(20)))
-//
-//  val o2: Option[Int] = None
-// println(assert(o2.map(_.toString).isEmpty))
+  //  val o1: Option[Int] = Some(10)
+  //  assert(o1.map(_.toString).contains("10"))
+  // println(assert(o1.map(_ * 2.0).contains(20)))
+  //
+  //  val o2: Option[Int] = None
+  // println(assert(o2.map(_.toString).isEmpty))
   // ********************************************************
 
   //val myMap = Map("MI" -> "Michigan", "OH" -> "Ohio", "WI" -> "Wisconsin", "MI" -> "Michigan")

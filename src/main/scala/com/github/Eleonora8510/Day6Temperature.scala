@@ -2,7 +2,7 @@ package com.github.Eleonora8510
 
 object Day6Temperature extends App {
 
-  def celsiustoFarenheit(celsius: Double):Double = 32 + celsius*9/5
+  def celsiustoFarenheit(celsius: Double): Double = 32 + celsius * 9 / 5
 
   def fromCelsiusToFarenheit(tempCelsius: Double): Unit = {
     val tempFarenheit = 32 + Math.round((tempCelsius * 9 / 5) * 100) / 100.00

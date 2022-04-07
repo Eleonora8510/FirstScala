@@ -1,11 +1,11 @@
 package com.github.Eleonora8510
 
-object Day3TypeCasting extends App{
+object Day3TypeCasting extends App {
   println("Type casting different data types")
   // https://docs.scala-lang.org/tour/unified-types.html
-  val a= 200
+  val a = 200
   val b = a.toByte // convert to byte
-  println(a,b)
+  println(a, b)
   println(b.toInt)
   val c = 127
   val d = 128

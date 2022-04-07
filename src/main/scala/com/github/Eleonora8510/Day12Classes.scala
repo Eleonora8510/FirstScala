@@ -7,8 +7,8 @@ package com.github.Eleonora8510
 class PlainHouse
 
 /**
- * Describes a blueprint for a generic House
- * @param name - House name
+ * Describes a blueprint for a generic com.github.Eleonora8510.House
+ * @param name - com.github.Eleonora8510.House name
  * @param levels - how many stories are in the house
  */
 class House(var name:String,
@@ -65,15 +65,15 @@ class House(var name:String,
 
 //so object in Scala is so called singleton object
 //we have said that we are only going to have a single instance
-//from Day12Classes defintion
+//from com.github.Eleonora8510.Day12Classes defintion
 object Day12Classes extends App {
   println("Classes as blueprints for objects")
   println("Objects hold data and methods to work with data")
   //https://docs.scala-lang.org/overviews/scala-book/classes.html
 
-  val myPlainHouse = new PlainHouse //this creates an object instances out of PlainHouse blueprint
+  val myPlainHouse = new PlainHouse //this creates an object instances out of com.github.Eleonora8510.PlainHouse blueprint
   println(myPlainHouse)
-  val anotherPlainHouse = new PlainHouse //this is a second object out of our PlainHouse class blueprint
+  val anotherPlainHouse = new PlainHouse //this is a second object out of our com.github.Eleonora8510.PlainHouse class blueprint
   println(anotherPlainHouse)
 
   val myHouse = new House("countryHouse", 2)
@@ -85,7 +85,7 @@ object Day12Classes extends App {
   myHouse.name = "myCountryCastle" // i can SET fields if they were defined in the blueprint with var
   println(myHouse.name)
 
-  //i create another object out of House class blueprint
+  //i create another object out of com.github.Eleonora8510.House class blueprint
   val anotherHouse = new House("cityHouse", 5)
   anotherHouse.prettyPrint()
 
