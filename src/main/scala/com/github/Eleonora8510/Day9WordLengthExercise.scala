@@ -25,9 +25,9 @@ object Day9WordLengthExercise extends App {
 
   //for (word <- words){
   //println(s"$word length is ${word.length}")
-//}
+  //}
 
-    words.foreach(word => println(s"$word length is ${word.length}"))
+  words.foreach(word => println(s"$word length is ${word.length}"))
 
 
 }

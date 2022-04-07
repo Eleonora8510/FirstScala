@@ -1,6 +1,5 @@
 package com.github.Eleonora8510
 
-
 import scala.io.StdIn.readLine
 
 object Day10ExerciseCountLetters extends App {
@@ -14,7 +13,7 @@ object Day10ExerciseCountLetters extends App {
 
   val text = readLine("Write a word or a sentence, please: ").toString.toLowerCase
 
-  def countWords(text: String):Map[String, Int]={
+  def countWords(text: String): Map[String, Int] = {
     val splittedText = text.split(" ")
     var wordLengthMap = Map[String, Int]()
     for (word <- splittedText) wordLengthMap += (word -> word.length)
@@ -23,12 +22,12 @@ object Day10ExerciseCountLetters extends App {
 
   println(countWords(text))
 
-//  val splittedText = text.split(" ")
-//  //val wordLengthMap = for (word <- splittedText) yield (word, word.length).toString()
-//  val wordLengths = splittedText.map(words => words.length)
-//  val wordsMap = Map(splittedText.mkString(", ") -> wordLengths.mkString(", "))
-//  println(wordsMap)
-//  println(wordsMap.size)
+  //  val splittedText = text.split(" ")
+  //  //val wordLengthMap = for (word <- splittedText) yield (word, word.length).toString()
+  //  val wordLengths = splittedText.map(words => words.length)
+  //  val wordsMap = Map(splittedText.mkString(", ") -> wordLengths.mkString(", "))
+  //  println(wordsMap)
+  //  println(wordsMap.size)
 
   //println(wordLengthMap)
 
@@ -52,20 +51,20 @@ object Day10ExerciseCountLetters extends App {
   //  //think of throwing things in boxes when you organize stuff around the house
   //  //we are going to set a box for each letter and just throw the letters in
 
-    val charCountMapToo = scala.collection.mutable.Map[Char, Int]()
+  val charCountMapToo = scala.collection.mutable.Map[Char, Int]()
 
-    for (c <- text) {
-      if (charCountMapToo.contains(c)) {
-        charCountMapToo(c) += 1
-      } else {
-        charCountMapToo(c) = 1
-      }
+  for (c <- text) {
+    if (charCountMapToo.contains(c)) {
+      charCountMapToo(c) += 1
+    } else {
+      charCountMapToo(c) = 1
     }
+  }
 
 
-    println(charCountMapToo)
+  println(charCountMapToo)
 
-  def countCharsByCounting(str: String):Map[Char, Int] = {
+  def countCharsByCounting(str: String): Map[Char, Int] = {
     val charCountMap = scala.collection.mutable.Map[Char, Int]()
     for (c <- text) {
       println(s"Will do smth with $c")
@@ -75,8 +74,8 @@ object Day10ExerciseCountLetters extends App {
     charCountMap.toMap //functions should return immutable structures whenever possible
   }
 
-  def countCharsByBuckets(text:String, lower:Boolean=false):Map[Char,Int]={
-    val charCountMap =scala.collection.mutable.Map[Char,Int]()
+  def countCharsByBuckets(text: String, lower: Boolean = false): Map[Char, Int] = {
+    val charCountMap = scala.collection.mutable.Map[Char, Int]()
     val myText = if (lower) text.toLowerCase else text
     for (c <- myText) {
       if (charCountMap.contains(c)) {
@@ -86,7 +85,7 @@ object Day10ExerciseCountLetters extends App {
       }
     }
     charCountMap.toMap
-    }
+  }
 
   val longText = "A quick brown fox jumped over a sleeping dog" * 1_000
   println(longText.length)
@@ -94,7 +93,7 @@ object Day10ExerciseCountLetters extends App {
   val t0 = System.nanoTime()
   val resMap = countCharsByCounting(longText)
   val t1 = System.nanoTime()
-  MyUtil.printDeltaMs(t0,t1,"Counting by actually counting each char")
+  MyUtil.printDeltaMs(t0, t1, "Counting by actually counting each char")
 
   val t2 = System.nanoTime()
   val resMap2 = countCharsByBuckets(longText)
@@ -104,13 +103,13 @@ object Day10ExerciseCountLetters extends App {
   val hugeText = "A quick brown fox jumped over a sleeping dog" * 1_000_000
   println(s" Huge text is ${hugeText.length} characters long")
   val t4 = System.nanoTime()
-  val resMap3= countCharsByBuckets(hugeText)
+  val resMap3 = countCharsByBuckets(hugeText)
   val t5 = System.nanoTime()
   MyUtil.printDeltaMs(t4, t5, "Counting by buckets huge text")
   println(resMap3)
 
-  val t6= System.nanoTime()
-  val resMap4= countCharsByBuckets(hugeText, lower=false)
+  val t6 = System.nanoTime()
+  val resMap4 = countCharsByBuckets(hugeText, lower = false)
   val t7 = System.nanoTime()
   MyUtil.printDeltaMs(t6, t7, "Counting by buckets huge text lower only")
   println(resMap4)

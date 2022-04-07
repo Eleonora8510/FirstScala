@@ -2,7 +2,7 @@ package com.github.Eleonora8510
 
 object Day7StringExercise extends App {
   //TODO
-  def processString(text:String, uppercaseChars:String ="", needsTrim:Boolean=false, suffix:String=""):String = {
+  def processString(text: String, uppercaseChars: String = "", needsTrim: Boolean = false, suffix: String = ""): String = {
     //TODO first trim string if it needs trimming from the argument
     //TODO replace All characters in uppercaseChars with their uppercase versions
     //you will need to write a loop
@@ -21,7 +21,7 @@ object Day7StringExercise extends App {
 
     //var newString = ""
     val sb = new StringBuilder("")
-    for (c <- trimmedString){
+    for (c <- trimmedString) {
       if (uppercaseChars.contains(c)) {
         sb += c.toUpper
       } else {

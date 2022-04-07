@@ -1,6 +1,6 @@
 package com.github.Eleonora8510
 
-object Day15Tuples extends App{
+object Day15Tuples extends App {
   //https://docs.scala-lang.org/tour/tuples.html#inner-main
   //https://stackoverflow.com/questions/54701769/convert-tuple-to-array-in-scala
 
@@ -24,7 +24,7 @@ object Day15Tuples extends App{
   //https://stackoverflow.com/questions/54701769/convert-tuple-to-array-in-scala
 
   val myArray = myTuple.productIterator.toArray
-  for (it<-myArray) println(it)
+  for (it <- myArray) println(it)
 
   //we could cast each member to string
   val stringArray = myArray.map(_.toString)

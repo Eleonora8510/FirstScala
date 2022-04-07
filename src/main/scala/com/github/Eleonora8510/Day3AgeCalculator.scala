@@ -16,4 +16,3 @@ object Day3AgeCalculator extends App {
   //println(year.getClass, diff.getClass, newYear.getClass)
   println(s"So, at $newYear you will be 100 years old ;)")
 }
-

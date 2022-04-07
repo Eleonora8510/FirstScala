@@ -2,31 +2,31 @@ package com.github.Eleonora8510
 
 import scala.io.StdIn.readLine
 
-object Day8CubeSequence extends App{
-    //TODO ask user for starting number
-    //TODO ask user for ending numbers
-    //Calculate cubes of these integers including start and end AND store results in a sequence
-    //Print the saved sequence on screen
+object Day8CubeSequence extends App {
+  //TODO ask user for starting number
+  //TODO ask user for ending numbers
+  //Calculate cubes of these integers including start and end AND store results in a sequence
+  //Print the saved sequence on screen
 
-    //extra challenge save odd cubes and print them
+  //extra challenge save odd cubes and print them
 
-    val startingNumber = readLine("Enter the starting number, please \n").toInt
-    val endingNumber = readLine("Enter the ending number, please \n").toInt
+  val startingNumber = readLine("Enter the starting number, please \n").toInt
+  val endingNumber = readLine("Enter the ending number, please \n").toInt
 
-    if (startingNumber > endingNumber) println("The starting number should be less than the ending number")
-    else {
-      val cubes = for (number <- startingNumber to endingNumber) yield Math.pow(number, 3).toInt
-      println(s"The cubes are: $cubes")
-     val oddCubes = for (number <- cubes if number % 2==1) yield number
-     println(s"Odd cubes $oddCubes")
-    }
+  if (startingNumber > endingNumber) println("The starting number should be less than the ending number")
+  else {
+    val cubes = for (number <- startingNumber to endingNumber) yield Math.pow(number, 3).toInt
+    println(s"The cubes are: $cubes")
+    val oddCubes = for (number <- cubes if number % 2 == 1) yield number
+    println(s"Odd cubes $oddCubes")
+  }
 
   val startNumber = readLine("Enter start number:").toInt
   val endNumber = readLine("Enter edn number:").toInt
   val numbers = startNumber to endNumber
   val cubeSequince = scala.collection.mutable.ArrayBuffer[Int]()
-  for (n <- startNumber to endNumber){
-    val cube = n*n*n
+  for (n <- startNumber to endNumber) {
+    val cube = n * n * n
     cubeSequince += cube
   }
   println(cubeSequince)
@@ -46,5 +46,3 @@ object Day8CubeSequence extends App{
 
 
 }
-
-

@@ -48,7 +48,7 @@ object Day13Inheritance extends App{
 
   val newTeacher = new Teacher("Hanza","Lapins","aqcuitqnce", 500)
   newTeacher.teach()
-  println(newTeacher) // just like Student I still have access to pretty print since super class was in fact a case class
+  println(newTeacher) // just like com.github.Eleonora8510.Student I still have access to pretty print since super class was in fact a case class
 
   //if we want to inherit from more than one class at once we will need to use traits instead for additional inheritance
 

@@ -21,7 +21,7 @@ object Day15CaseClassPatternMatching extends App {
       case Email(sender, title, _) =>
         s"You got an email from $sender with title: $title"
       case SMS(number, message) =>
-        s"You got an SMS from $number! Message: $message"
+        s"You got an com.github.Eleonora8510.SMS from $number! Message: $message"
       case VoiceRecording(name, link) =>
         s"You received a Voice Recording from $name! Click the link to hear it: $link"
       case WhatsUpMessage(name, msg, number) => s"You've got a WhatsUp Message: $msg with $name from number $number"
@@ -32,7 +32,7 @@ object Day15CaseClassPatternMatching extends App {
   val someSms = SMS("12345", "Are you there?")
   val someVoiceRecording = VoiceRecording("Tom", "voicerecording.org/id/123")
   val someWhatsUpMessage = WhatsUpMessage("Liga", "Come to super", 1234)
-  println(showNotification(someSms))  // prints You got an SMS from 12345! Message: Are you there?
+  println(showNotification(someSms))  // prints You got an com.github.Eleonora8510.SMS from 12345! Message: Are you there?
 
   println(showNotification(someVoiceRecording))  // prints You received a Voice Re
 }

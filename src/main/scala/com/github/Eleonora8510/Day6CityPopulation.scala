@@ -1,6 +1,5 @@
 package com.github.Eleonora8510
 
-
 object Day6CityPopulation extends App {
 
   // println("Function to calculate city growth")
@@ -68,11 +67,11 @@ object Day6CityPopulation extends App {
 
     numberOfYears
   }
-    //println(getCityYear(1000, 2, 50, 1200)) // should print 3
-    //println(getCityYear(1000, 2, -50, 1200)) // should print -1
-    //println(getCityYear(1500000, 2.5, 10000, 2000000)) // should print 10
-    //so searching for negative growth is currently not supported
-    //println(getCityYear(1000,2,-50,800)) //this will give us -1 when we actually would reach this
-    println(getCityYear(1000,-2,-50,800)) //this will give us -1 when we actually would reach thisprintln(getCityYear(1000,-2,-50,800))
-    println(getCityYear(1000,-0.5,-50,2000))
+  //println(getCityYear(1000, 2, 50, 1200)) // should print 3
+  //println(getCityYear(1000, 2, -50, 1200)) // should print -1
+  //println(getCityYear(1500000, 2.5, 10000, 2000000)) // should print 10
+  //so searching for negative growth is currently not supported
+  //println(getCityYear(1000,2,-50,800)) //this will give us -1 when we actually would reach this
+  println(getCityYear(1000, -2, -50, 800)) //this will give us -1 when we actually would reach thisprintln(getCityYear(1000,-2,-50,800))
+  println(getCityYear(1000, -0.5, -50, 2000))
 }

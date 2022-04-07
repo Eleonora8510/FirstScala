@@ -15,7 +15,7 @@ object Day16WeekdayEnumerationExercise extends App{
   }
 
 
-  println(isWeekend(Weekdays.Monday))
+  println(s"Is Monday the weekend? ${isWeekend(Weekdays.Monday)}")
   println(isWeekend(Weekdays.Sunday))
 
 }
