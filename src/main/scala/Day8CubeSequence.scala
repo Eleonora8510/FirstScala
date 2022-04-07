@@ -19,6 +19,30 @@ object Day8CubeSequence extends App{
      println(s"Odd cubes $oddCubes")
     }
 
+  val startNumber = readLine("Enter start number:").toInt
+  val endNumber = readLine("Enter edn number:").toInt
+  val numbers = startNumber to endNumber
+  val cubeSequince = scala.collection.mutable.ArrayBuffer[Int]()
+  for (n <- startNumber to endNumber){
+    val cube = n*n*n
+    cubeSequince += cube
+  }
+  println(cubeSequince)
+  val oddCubes1 = for (cubeSequince <- cubeSequince if cubeSequince % 2 == 0) yield cubeSequince
+  println(oddCubes1)
+
+  val startNumber1 = readLine("Enter starting number: ").toInt
+  val endNumber1 = readLine("Enter ending number: ").toInt
+
+  val cubeSequence = for (number <- startNumber1 to endNumber1) yield Math.pow(number, 3).toInt
+  val cubeSequenceString = cubeSequence.mkString(", ")
+  println(s"The cubes of all numbers between $startNumber1 and $endNumber1 are: $cubeSequenceString")
+
+  val oddCubes = for (cube <- cubeSequence if cube % 2 != 0) yield cube
+  val oddCubesString = oddCubes.mkString(", ")
+  println(s"Among them, the odd cubes: $oddCubesString")
+
+
 }
 
 

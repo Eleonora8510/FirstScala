@@ -1,6 +1,6 @@
 import scala.io.StdIn.readLine
 
-object Day9WordLengthExercise extends App{
+object Day9WordLengthExercise extends App {
   //TODO ask user to enter a sentence
   //Split sentence into words using split , you will will have a sequence of words, we did this on Day 8
   //Generate word length sequence (can use map or yield)
@@ -21,9 +21,11 @@ object Day9WordLengthExercise extends App{
   val wordsOver5 = words.filter(it => it.length > 5)
   println(s"Words of length over 5:\n${wordsOver5.mkString(",")}")
 
-  for (word <- words){
-    println(s"$word length is ${word.length}")
-  }
+  //for (word <- words){
+  //println(s"$word length is ${word.length}")
+//}
+
+    words.foreach(word => println(s"$word length is ${word.length}"))
 
 
 }

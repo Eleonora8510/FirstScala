@@ -12,7 +12,15 @@ class Animal(val name:String, val animalType:String, val likes:String="", val so
     case "fox" => "yelp"
     case "kangaroo" => "chortle"
     case "cat" => "meow"
+    case _ => "brrrrr" // for unknown animals
   }
+
+//  def meet(contact:String): Unit = {
+//    if (likes(contact)) { //so if the contact is in the Set then this will be true
+//      println("Hello there, I like that \u263a \n") // ☺
+//    }
+//    else println("Nope. Byeeeee.\n")
+//  }
 
 }
 object Day12ExerciseAnimals extends App{

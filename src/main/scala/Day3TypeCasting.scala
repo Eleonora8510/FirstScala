@@ -25,6 +25,7 @@ object Day3TypeCasting extends App{
   println(myString, myNumber)
   val myName = "Eleonora"
   //val myNameNum = myName.toInt
-
+  val emoji = '\u263a'
+  println(emoji.toInt)
 
 }

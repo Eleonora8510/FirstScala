@@ -1,6 +1,6 @@
 object Day7StringExercise extends App {
   //TODO
-  def processString(text:String, uppercaseChars:String ="", needsTrim:Boolean=false):String = {
+  def processString(text:String, uppercaseChars:String ="", needsTrim:Boolean=false, suffix:String=""):String = {
     //TODO first trim string if it needs trimming from the argument
     //TODO replace All characters in uppercaseChars with their uppercase versions
     //you will need to write a loop
@@ -15,18 +15,23 @@ object Day7StringExercise extends App {
       trimmedString = text
     }
 
-    var newString = ""
+    //val trimmedString = if (needsTrim) text.trim else text
+
+    //var newString = ""
+    val sb = new StringBuilder("")
     for (c <- trimmedString){
       if (uppercaseChars.contains(c)) {
-        newString += c.toUpper
+        sb += c.toUpper
       } else {
-        newString += c
+        sb += c
       }
     }
-    newString
+    sb ++= suffix
+    sb.toString
   }
 
   println(processString("abracadabra", "cr")) //should print abRaCadabRa
   println(processString("   abracadabra  ", "cr", needsTrim = true)) //should print abRaCadabRa
+  println(processString("   abracadabra  ", "cr", needsTrim = true, "END OF MY STRING")) //should print abRaCadabRa
 
 }
