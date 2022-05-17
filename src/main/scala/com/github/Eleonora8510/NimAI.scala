@@ -23,11 +23,13 @@ object NimAI {
   def getSmartStrategy(currentState: Int): Int = {
     //some match case would work in combination with modulo / reminder operation
     //plus what should computer do when it has a losing position - one idea play randomly then
-    currentState % 3 match {
-      case 0 => 2
+
+    val remainder = currentState % 4
+    remainder match{
+      case 0 => 3 // we have 4, 8 matches, we take 3
       case 1 => getRandomStrategy
-      case 2 => 1
-      case _ => getMinimalStrategy
+      case 2=> 1 // we have 2, 6, 10, we take 1
+      case 3 => 2 // we have 3, 7, 11 etc, we take 2
     }
   }
 
