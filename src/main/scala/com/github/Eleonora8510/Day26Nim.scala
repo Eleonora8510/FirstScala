@@ -26,7 +26,7 @@ object Day26Nim extends App{
   val maxMove = 3
 
   // get player names
-  val playerA = readLine("Player A what is your name? ")
+  var playerA = readLine("Player A what is your name? ")
   var playerB = readLine("Player B what is your name? (press ENTER for computer)")
   if (playerB == "") playerB = "COMPUTER" //TODO see if you can do the previous 2 lines at once
 
@@ -34,7 +34,6 @@ object Day26Nim extends App{
   var computerLevel = 0
   if (playerB == "COMPUTER"){
     computerLevel = getIntegerInput("Please enter computer level (1-3)")
-
   }
 
   def getIntegerInput(prompt:String="Please enter an integer: "): Int = {
@@ -59,6 +58,7 @@ object Day26Nim extends App{
 
   var isNewGameNeeded = true
   while (isNewGameNeeded) {
+
     println(s"Player A - $playerA and Player B - $playerB  let us play NIM")
     val isPlayerAStarting = true // so A goes first
     val nimGame = new Nim(playerA, playerB,startingCount, gameEndCondition, minMove, maxMove, isPlayerAStarting)
@@ -85,8 +85,25 @@ object Day26Nim extends App{
 
     db.printAllPlayers()
 
-    val nextGameInput = readLine("Do you want to play another game with same players? (Y/N)")
-    if (nextGameInput.toLowerCase.startsWith("y"))isNewGameNeeded = true
+    val nextGameInput = readLine("Do you want to play another game? (Y/N)")
+    if (nextGameInput.toLowerCase.startsWith("y")) {
+      val nextGameInput2 = readLine("Do you want to play another game with new players? (Y/N)")
+      if (nextGameInput2.toLowerCase.startsWith("y")) {
+        playerA = readLine("Player A what is your name? ")
+        playerB = readLine("Player B what is your name? (press ENTER for computer)")
+        if (playerB == "") {
+          playerB = "COMPUTER"
+          computerLevel = getIntegerInput("Please enter computer level (1-3)")
+          isNewGameNeeded = true
+        }
+      }
+
+      else {
+        computerLevel = getIntegerInput("Please enter computer level (1-3)")
+        isNewGameNeeded = true
+      }
+
+    }
     else isNewGameNeeded = false
 
   }
