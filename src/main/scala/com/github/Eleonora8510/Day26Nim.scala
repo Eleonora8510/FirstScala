@@ -2,6 +2,8 @@ package com.github.Eleonora8510
 
 import scala.io.StdIn.readLine
 
+// https://docs.scala-lang.org/overviews/scala-book/try-catch-finally.html
+
 object Day26Nim extends App{
   //TODO implement basic version of https://en.wikipedia.org/wiki/Nim
   //https://en.wikipedia.org/wiki/Nim#The_21_game
@@ -16,63 +18,137 @@ object Day26Nim extends App{
   //NIM specific TODO
   //setup
   //we will start with 21 matches/tokens
+  val saveDst = "src/resources/nim/scores.csv"
+  val db = new NimDB("src/resources/nim/nim.db")
   val startingCount = 21
   val gameEndCondition = 0
   val minMove = 1
   val maxMove = 3
 
-  // TODO get player names
+  // get player names
   val playerA = readLine("Player A what is your name? ")
-  val playerB = readLine("Player B what is your name? ")
+  var playerB = readLine("Player B what is your name? (press ENTER for computer)")
+  if (playerB == "") playerB = "COMPUTER" //TODO see if you can do the previous 2 lines at once
 
-  println(s"Palyer A - $playerA and Pplayer B - $playerB  let us play NIM")
+  // TODO more computer levels
+  def getComputerMove():Int = 2 //TODO add more complex logic later
+  //computer can be made to play perfectly
+  //or we could add some randomness
 
-  // inevitably in most applications we will have some state that we want to keep track of (sledzic, sekti)
-  //here it is simple enough state that we can use a few variables
-  // at some point we will want to structure this game/app state into separate object based on some class
+  //main loop - while there are some matches play on
+  //TODO implement PvP - player versus player - computer only checks the rules
 
-  var currentState = startingCount
-  var isPlayerATurn = true // so A goes first
-
-   def clampMove(move: Int, min: Int = minMove, max: Int = maxMove, verbose: Boolean = true):Int = {  // užspaustas ėjimas
-      if (move > max){
-        if (verbose) println(s"$move was too much, you wil have to settle for $max")
-        max
-      } else if (move < min) {
-        if (verbose) println(s"$move was too little, you wil have to settle for $min")
-        min
-      } else {
-        move
+  def getHumanMove(currentPlayer:String): Int = {
+    var needsInteger = true //we use this as a flag for our code
+    var myInteger = 0
+    //so we keep going until we get an input which we can cast to integer
+    while (needsInteger) {
+      val moveInput = readLine(s"How many matches do you want to take $currentPlayer? (1-3) ")
+      //https://alvinalexander.com/scala/scala-try-catch-finally-syntax-examples-exceptions-wildcard/
+      try {
+        myInteger = moveInput.toInt //this type Casting will throw an exception on bad input
+        needsInteger = false //IMPORTANT! this line will not execute if error is encountered
+      } catch {
+        //It is considered good practice to catch specific errors relevant to your code
+        case e:NumberFormatException => println(s"That is not a number! + $e") //for users you would not print $e
+        // handling any other exception that might come up
+        case unknown => println("Got this unknown exception we need an integer!: " + unknown)
       }
-
-   }
-
-  // main loop - while there are some matches play on
-  // TODO implement PvP (Player versus Player) - computer only checks the rules
-  while (currentState > gameEndCondition){
-    val currentPlayer = if (isPlayerATurn) playerA else playerB
-    //show the game state
-    println(s"Currently there are $currentState matches on the table")
-    val move = readLine(s"How many matches do you want to take $currentPlayer? (1-3) ").toInt //TODO error checking
-    //TODO limit the number of matches according to the rules
-    val safeMove = clampMove(move, minMove, maxMove)
-    currentState -= safeMove
-    isPlayerATurn = !isPlayerATurn // toggle trick to change a boolean to reverse version of present
-    // play the game
+    }
+    myInteger
   }
 
-  // TODO PvC - Player versus Computer - you will need to add some logic to the computer
+  var isNewGameNeeded = true
+  while (isNewGameNeeded) {
+    println(s"Player A - $playerA and Player B - $playerB  let us play NIM")
+    val isPlayerAStarting = true // so A goes first
+    val nimGame = new Nim(playerA, playerB,startingCount, gameEndCondition, minMove, maxMove, isPlayerAStarting)
 
-  //end cleanup here we just print some game state and congratulations
-  //TODO add saving to Database, stats, etc
+    while (nimGame.isGameActive()) {
+      nimGame.showStatus()
 
-  val winner = if (isPlayerATurn) playerA else playerB
-  val loser = if (!isPlayerATurn) playerA else playerB
-  println(s"Game ended. Congratulations $winner! Better luck next time $loser.")
+      val move = if (nimGame.isCurrentPlayerComputer()) {
+        getComputerMove()
+      } else {
+        getHumanMove(nimGame.currentPlayer)
+      }
+      nimGame.removeMatches(move)
+      nimGame.nextPlayer()
+    }
+    nimGame.showStatus()
+    nimGame.printMoves()
+    nimGame.saveGameResult(saveDst)
+    db.insertResult(nimGame.getWinner, nimGame.getLoser)
+    nimGame.saveGameScore()
+    db.insertFUllScore(nimGame.getMoves)
+    db.printTopPlayers()
+    db.printTopLosers()
 
- // TODO implement multiple games
+    db.printAllPlayers()
 
-  // no clean up at the moment
+    val nextGameInput = readLine("Do you want to play another game with same players? (Y/N)")
+    if (nextGameInput.toLowerCase.startsWith("y"))isNewGameNeeded = true
+    else isNewGameNeeded = false
 
+  }
+
+  println("Thank you for playing! Hoping to see you again ;-)")
+
+//  println(s"Player A - $playerA and Player B - $playerB  let us play NIM")
+//
+//  // inevitably in most applications we will have some state that we want to keep track of (sledzic, sekti)
+//  //here it is simple enough state that we can use a few variables
+//  // at some point we will want to structure this game/app state into separate object based on some class
+//
+//  //var currentState = startingCount
+//  var isPlayerAStarting = true // so A goes first
+//
+//  //TODO create a new object holding all the information necessary for a game nim from this class Nim
+//  val nimGame = new Nim(playerA, playerB,startingCount, gameEndCondition, minMove, maxMove, isPlayerAStarting)
+//
+//
+//
+//  while (nimGame.isGameActive()) {
+//    //show the game state
+//    //    println(s"Currently there are $currentState matches on the table")
+//    nimGame.showStatus()
+//
+//    val move = if (nimGame.isCurrentPlayerComputer()) {
+//      getComputerMove()
+//    } else {
+//      getHumanMove(nimGame.currentPlayer)
+//    } //TODO error checking
+//    nimGame.removeMatches(move)
+//    nimGame.nextPlayer()
+//  }
+//  //TODO PvC - player versus computer you will need to add some logic to the computer, add more levels
+//
+//  //end cleanup here we just print some game state and congratulations
+//
+//
+//  //val winner = if (isPlayerATurn) playerA else playerB
+//  //val loser = if (!isPlayerATurn) playerA else playerB
+//  //println(s"Game ended. Congratulations $winner! Better luck next time $loser.")
+//
+//  nimGame.showStatus()
+//  nimGame.printMoves()
+//
+//
+//  //Day27Persistence.saveGameResult(saveDst, nimGame.getWinner(), nimGame.getLoser())
+//
+//  nimGame.saveGameResult(saveDst)
+//  db.insertResult(nimGame.getWinner, nimGame.getLoser)
+//  nimGame.saveGameScore()
+//  db.insertFUllScore(nimGame.getMoves)
+//  db.printTopPlayers()
+//  db.printTopLosers()
+//  //print game status again
+//
+//  db.printAllPlayers()
+//
+//  //TODO implement multiple games
+//  val nextGameInput = readLine("Do you want to play another game with same players? (Y/N)")
+
+  // TODO add support for new player names
 
 }
