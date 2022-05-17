@@ -31,19 +31,18 @@ object Day26Nim extends App{
   if (playerB == "") playerB = "COMPUTER" //TODO see if you can do the previous 2 lines at once
 
   // TODO more computer levels
-  def getComputerMove():Int = 2 //TODO add more complex logic later
-  //computer can be made to play perfectly
-  //or we could add some randomness
+  var computerLevel = 0
+  if (playerB == "COMPUTER"){
+    computerLevel = getIntegerInput("Please enter computer level (1-3)")
 
-  //main loop - while there are some matches play on
-  //TODO implement PvP - player versus player - computer only checks the rules
+  }
 
-  def getHumanMove(currentPlayer:String): Int = {
+  def getIntegerInput(prompt:String="Please enter an integer: "): Int = {
     var needsInteger = true //we use this as a flag for our code
     var myInteger = 0
     //so we keep going until we get an input which we can cast to integer
     while (needsInteger) {
-      val moveInput = readLine(s"How many matches do you want to take $currentPlayer? (1-3) ")
+      val moveInput = readLine(prompt)
       //https://alvinalexander.com/scala/scala-try-catch-finally-syntax-examples-exceptions-wildcard/
       try {
         myInteger = moveInput.toInt //this type Casting will throw an exception on bad input
@@ -68,9 +67,9 @@ object Day26Nim extends App{
       nimGame.showStatus()
 
       val move = if (nimGame.isCurrentPlayerComputer()) {
-        getComputerMove()
+        NimAI.getComputerMove(nimGame.currentState, computerLevel)
       } else {
-        getHumanMove(nimGame.currentPlayer)
+        getIntegerInput(s"${nimGame.currentPlayer} please enter how many matches you are taking (1-3)")
       }
       nimGame.removeMatches(move)
       nimGame.nextPlayer()
