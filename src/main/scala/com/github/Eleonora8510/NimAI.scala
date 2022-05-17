@@ -23,7 +23,12 @@ object NimAI {
   def getSmartStrategy(currentState: Int): Int = {
     //some match case would work in combination with modulo / reminder operation
     //plus what should computer do when it has a losing position - one idea play randomly then
-    2 // FIXME
+    currentState % 3 match {
+      case 0 => 2
+      case 1 => getRandomStrategy
+      case 2 => 1
+      case _ => getMinimalStrategy
+    }
   }
 
   //main loop - while there are some matches play on
