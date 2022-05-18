@@ -33,7 +33,16 @@ object FinalProject_TODO_List extends App{
   }
 
   def updateTaskStatus(): Unit = {
+    val newStatus = readLine("Choose the status:\n" +
+      "(C) created\n" +
+      "(P) in progress\n" +
+      "(F) finished")
 
+    var updateStatus = ""
+
+    if (newStatus.toLowerCase.startsWith("c")) updateStatus = "created"
+    else if (function.toLowerCase.startsWith("p")) updateStatus = "in progress"
+    else if (function.toLowerCase.startsWith("f")) updateStatus = "finished"
 
 
   }
