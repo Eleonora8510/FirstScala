@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter
 import scala.io.StdIn.readLine
 
 class Tasks(task: String,
-            created: String =  DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm").format(LocalDateTime.now),
+            created: String =  DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(LocalDateTime.now),
             status: String,
             deadline: String) {
 
@@ -30,18 +30,17 @@ object FinalProject_TODO_List extends App{
 
 
   /**
-   * return the prettyPrint of task inserted
+   * return the information about task: task, status, deadline
    */
   def enterNewTask():(String, String, String) = {
     val task = readLine("Enter the task: ")
-    val status = "created"
     // TODO check if the deadline is not earlier than current time
-    val deadline = readLine("Enter the deadline: (yyyy-MM-dd_HH:mm)")
+    val deadline = readLine("Enter the deadline: (yyyy-MM-dd HH:mm)")
+    val status = "created"
+    //val newTask = new Tasks(task = task, status = status, deadline = deadline)
 
-    val newTask = new Tasks(task = task, status = status, deadline = deadline)
-
-    newTask.prettyPrint()
-    (task, status, deadline)
+    ///newTask.prettyPrint()
+    (task, deadline, status)
 
   }
 
@@ -55,12 +54,12 @@ object FinalProject_TODO_List extends App{
       "(P) in progress\n" +
       "(F) finished\n")
 
-    var updateStatus = ""
+    var updatedStatus = ""
 
-    if (newStatus.toLowerCase.startsWith("c")) updateStatus = "created"
-    else if (newStatus.toLowerCase.startsWith("p")) updateStatus = "in progress"
-    else updateStatus = "finished"
-    updateStatus
+    if (newStatus.toLowerCase.startsWith("c")) updatedStatus = "created"
+    else if (newStatus.toLowerCase.startsWith("p")) updatedStatus = "in progress"
+    else updatedStatus = "finished"
+    updatedStatus
 
 
   }
