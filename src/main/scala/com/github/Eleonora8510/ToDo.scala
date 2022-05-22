@@ -1,74 +1,121 @@
 package com.github.Eleonora8510
 
-import com.github.Eleonora8510.FinalProject_TODO_List.db
-
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import scala.io.StdIn.readLine
 
-case class Task(task: String, created:String,  deadline:String, status:String) {
-  def getPrettyString: String = s"Task: $task, created: $created, status: $status, deadline: $deadline"
+
+case class Task(id: Int, task: String, created:String,  deadline:String, status:String) {
+  def getPrettyString: String = s"ID: $id, task: $task, created: $created, status: $status, deadline: $deadline"
 }
 
-class ToDo (task: String,
-            created: String =  DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm").format(LocalDateTime.now),
-            status: String = "created",
-            deadline: String){
+case class Status (status: String, numberOfTasks: Int) {
+  def statusPrettyPrint: String = s"There are $numberOfTasks tasks with status $status"
+}
+
+
+class ToDo (){
 
   /**
-   * inserts the information about task: task, status, deadline
+   * insert the information about task: task, status, deadline
    */
   val db = new ToDoDB("src/resources/todo/todo.db")
 
   def enterNewTask():Unit = {
     val task = readLine("Enter the task: ")
-    // TODO check if the deadline is not earlier than current time
-    val deadline = readLine("Enter the deadline: (yyyy-MM-dd HH:mm)")
+    var deadline = readLine("Enter the deadline (ENTER to skip): (yyyy-MM-dd HH:mm)")
+
+    while (!getDate(deadline))
+      deadline = readLine("Enter the deadline (ENTER to skip): (yyyy-MM-dd HH:mm)")
+
     val status = "created"
-    //val newTask = new Tasks(task = task, status = status, deadline = deadline)
-
-    ///newTask.prettyPrint()
+    println(s"New ToDo is created: $task, deadline: $deadline")
     db.insertTask(task, deadline, status)
+  }
 
+  def getDate(deadline: String):Boolean = {
+
+    val yearInserted = getYearMonthDayRegEx(deadline)._1
+    val boolean = getYearMonthDayRegEx(deadline)._6
+
+    yearInserted match{
+      case "N/A" => println("No deadline inserted")
+      case "NO YEAR" => println("Wrong format of deadline")
+      case _ => println()
+    }
+
+    boolean
+
+  }
+
+  def getYearMonthDayRegEx(dateString: String): (String, String, String, String, String, Boolean) = {
+    val dateRegEx = raw"(\d){4}\D(\d){2}\D(\d){2}\D(\d){1,2}\D(\d){2}".r
+    dateString match {
+      case dateRegEx(year, month, day, hours, minutes) => (year, month, day, hours, minutes, true)
+      case "" =>("N/A", "N/A", "N/A", "N/A","N/A", true)
+      case _ => ("NO YEAR", "NO MONTH", "NO DAY", "NO HOURS", "NO MINUTES", false)
+    }
+  }
+
+  def showRemainingTasks(): Unit = {
+    val remainingTasks = db.getRemainingTasks
+    if (remainingTasks.length == 0) println("No tasks in database!")
+    else {
+      println("Remaining tasks are:")
+      remainingTasks.foreach(task => println(task.getPrettyString))
+    }
+  }
+
+  def showFinishedTasks(): Unit = {
+    val finishedTasks = db.getFinishedTasks()
+    if (finishedTasks.length == 0) println(s"Go forward! You do not have tasks completed")
+    else {
+      println("Finished tasks are:")
+      finishedTasks.foreach(task => println(task.getPrettyString))
+      println("Keep up the good work")
+    }
+  }
+
+  def deleteFinishedTasks(): Unit = {
+    println("Deleting finished tasks")
+    db.deleteFinishedTasks
   }
 
   /**
    *
-   * @return updated status
+   * @return updated status in DB
    */
-  def updateTaskStatus(): String = {
-    val newStatus = readLine("Choose the status:\n" +
+  def updateTaskStatus(): Unit = {
+    //need to show task list, so:
+    showRemainingTasks()
+
+    val chosenTask = readLine("Please enter the ID of the task to be updated:").toInt
+
+    var updatedStatus = readLine("Choose the status:\n" +
       "(C) created\n" +
       "(P) in progress\n" +
-      "(F) finished\n")
+      "(F) finished")
 
-    var updatedStatus = ""
-
-    if (newStatus.toLowerCase.startsWith("c")) updatedStatus = "created"
-    else if (newStatus.toLowerCase.startsWith("p")) updatedStatus = "in progress"
+    if (updatedStatus.toLowerCase.startsWith("c")) updatedStatus = "created"
+    else if (updatedStatus.toLowerCase.startsWith("p")) updatedStatus = "in progress"
     else updatedStatus = "finished"
-    updatedStatus
 
+    println(s"Great, task with ID $chosenTask was updated. New status is $updatedStatus")
 
+    db.updateTaskStatusDB(chosenTask, updatedStatus)
+
+  }
+
+  def printStats(): Unit = {
+    val result = db.getStatsDB
+    result.foreach(status => println(status.statusPrettyPrint))
   }
 
   /**
    * leave the main loop
    */
   def quit(): Unit = {
-    println("All is done! See you next time.")
+    FinalProject_ToDo_List.userIsActive = false
+    println("All is done! See you next time :)")
 
   }
-
-  def showRemainingTasks(): Unit = {
-    println("Remaining tasks are:")
-    val remainingTasks = db.getRemainingTasks
-    //val allPlayers = getFullPlayerInfo()
-    remainingTasks.foreach(task => println(task.getPrettyString))
-
-  }
-
-  //TODO add checking if there are any tasks inserted in database(table tasks)
-
 
 }
