@@ -54,21 +54,6 @@ class ToDoDB(val dbPath: String) {
 
   }
 
-  def insertNewStatus(status: String): Unit = {
-    val sql =
-      """
-        |UPDATE INTO statuses (status)
-        |VALUES (?);
-        |""".stripMargin
-
-    val preparedStmt: PreparedStatement = conn.prepareStatement(sql)
-
-    preparedStmt.setString(1, status)
-
-    preparedStmt.execute
-    preparedStmt.close()
-  }
-
   def insertTask(task: String, deadline: String, status: String): Unit = {
     val sql =
       """
@@ -189,13 +174,17 @@ class ToDoDB(val dbPath: String) {
     statusBuffer.toArray
   }
 
+  /**
+   *
+   * @return 5 tasks with the earliest deadline (tasks with no deadline are omitted)
+   */
   def sortTaskByDate(): Array[Task] = {
     val sqlSort =
       """
         |SELECT * FROM tasks
         |WHERE deadline LIKE "%20%"
         |ORDER BY deadline
-        |LIMIT 5;;
+        |LIMIT 5;
         |""".stripMargin
     val statement = conn.createStatement()
     val rs = statement.executeQuery(sqlSort)
@@ -211,4 +200,24 @@ class ToDoDB(val dbPath: String) {
     taskBuffer.toArray
   }
 
+  def longestRunningTasks(): Array[Task] = {
+    val sqlLongest =
+      """
+        SELECT * FROM tasks
+        |ORDER BY (datetime('now', 'localtime') - created)
+        |LIMIT 5;
+        |""".stripMargin
+    val statement = conn.createStatement()
+    val rs = statement.executeQuery(sqlLongest)
+    val taskBuffer = ArrayBuffer[Task]()
+    while (rs.next()) {
+      val task = Task(rs.getInt("id"),
+        rs.getString("task"),
+        rs.getString("created"),
+        rs.getString("deadline"),
+        rs.getString("status"))
+      taskBuffer += task
+    }
+    taskBuffer.toArray
+  }
 }

@@ -116,6 +116,12 @@ class ToDo (){
 
   }
 
+  def displayLongestRunningTasks(): Unit = {
+    val longestRunningTasks = db.longestRunningTasks
+    println("5 longest running tasks are:\n")
+    longestRunningTasks.foreach(task => println(task.getPrettyString))
+  }
+
 
   /**
    * leave the main loop
