@@ -109,6 +109,14 @@ class ToDo (){
     result.foreach(status => println(status.statusPrettyPrint))
   }
 
+  def showUrgentTasks(): Unit = {
+    val urgentTasks = db.sortTaskByDate
+    println("5 most urgent tasks are:\n")
+    urgentTasks.foreach(task => println(task.getPrettyString))
+
+  }
+
+
   /**
    * leave the main loop
    */

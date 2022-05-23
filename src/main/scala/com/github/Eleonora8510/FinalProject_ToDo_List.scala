@@ -26,17 +26,19 @@ object FinalProject_ToDo_List extends App{
         "(F) show finished tasks\n" +
         "(D) delete finished tasks\n" +
         "(S) print some stats\n" +
+        "(H) show 5 the most urgent tasks" +
         "(Q) quit\n")
 
       val input = function.toLowerCase
 
       input match {
         case "e" => toDo.enterNewTask()
-        case "u" => toDo.updateTaskStatus()equals()
+        case "u" => toDo.updateTaskStatus()
         case "r" => toDo.showRemainingTasks()
         case "f" => toDo.showFinishedTasks()
         case "d" => toDo.deleteFinishedTasks()
         case "s" => toDo.printStats()
+        case "h" => toDo.showUrgentTasks()
         case "q" => toDo.quit()
         case _ => println("Please choose one of the options above!")
       }

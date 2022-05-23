@@ -189,4 +189,26 @@ class ToDoDB(val dbPath: String) {
     statusBuffer.toArray
   }
 
+  def sortTaskByDate(): Array[Task] = {
+    val sqlSort =
+      """
+        |SELECT * FROM tasks
+        |WHERE deadline LIKE "%20%"
+        |ORDER BY deadline
+        |LIMIT 5;;
+        |""".stripMargin
+    val statement = conn.createStatement()
+    val rs = statement.executeQuery(sqlSort)
+    val taskBuffer = ArrayBuffer[Task]()
+    while (rs.next()) {
+      val task = Task(rs.getInt("id"),
+        rs.getString("task"),
+        rs.getString("created"),
+        rs.getString("deadline"),
+        rs.getString("status"))
+      taskBuffer += task
+    }
+    taskBuffer.toArray
+  }
+
 }
