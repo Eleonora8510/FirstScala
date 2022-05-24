@@ -2,16 +2,6 @@ package com.github.Eleonora8510
 
 import scala.io.StdIn.readLine
 
-
-case class Task(id: Int, task: String, created:String,  deadline:String, status:String) {
-  def getPrettyString: String = s"ID: $id, task: $task, created: $created, status: $status, deadline: $deadline"
-}
-
-case class Status (status: String, numberOfTasks: Int) {
-  def statusPrettyPrint: String = s"There are $numberOfTasks tasks with status $status"
-}
-
-
 class ToDo (){
 
   val db = new ToDoDB("src/resources/todo/todo.db")
@@ -34,8 +24,8 @@ class ToDo (){
 
   /**
    *
-   * @param deadline
-   * @returns true if the inserted date has correct format or if it is skipped and
+   * @param deadline - the deadline for task inserted by user
+   * @return true if the inserted date has correct format or if it is skipped and
    * returns false if date has wrong format
    */
   def getDate(deadline: String):Boolean = {
@@ -56,7 +46,7 @@ class ToDo (){
   /**
    *
    * @param dateString - deadline inserted together with task
-   * @returns year, month and day of the deadline and true if it is correct or
+   * @return year, month and day of the deadline and true if it is correct or
    * returns appropriate messages and false if it isn't correct
    */
   def getYearMonthDayRegEx(dateString: String): (String, String, String, Boolean) = {
@@ -102,8 +92,7 @@ class ToDo (){
   }
 
   /**
-   *
-   * @returns updated status in DB
+   * @return updated status in DB
    */
   def updateTaskStatus(): Unit = {
     //need to show task list, so:
@@ -159,7 +148,6 @@ class ToDo (){
     println("All is done! See you next time :)")
 
   }
-
 
 
 }
