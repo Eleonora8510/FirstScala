@@ -14,27 +14,34 @@ case class Status (status: String, numberOfTasks: Int) {
 
 class ToDo (){
 
-  /**
-   * insert the information about task: task, status, deadline
-   */
   val db = new ToDoDB("src/resources/todo/todo.db")
 
+  /**
+   * gets the information about task (task, status, deadline) and enter to the database
+   */
   def enterNewTask():Unit = {
     val task = readLine("Enter the task: ")
-    var deadline = readLine("Enter the deadline (ENTER to skip): (yyyy-MM-dd HH:mm)")
+    var deadline = readLine("Enter the deadline (ENTER to skip): (yyyy-MM-dd)")
 
-    while (!getDate(deadline))
-      deadline = readLine("Enter the deadline (ENTER to skip): (yyyy-MM-dd HH:mm)")
+    while (!getDate(deadline)) {
+        deadline = readLine("Enter the deadline (ENTER to skip): (yyyy-MM-dd)")
+    }
 
     val status = "created"
     println(s"New ToDo is created: $task, deadline: $deadline")
     db.insertTask(task, deadline, status)
   }
 
+  /**
+   *
+   * @param deadline
+   * @returns true if the inserted date has correct format or if it is skipped and
+   * returns false if date has wrong format
+   */
   def getDate(deadline: String):Boolean = {
 
     val yearInserted = getYearMonthDayRegEx(deadline)._1
-    val boolean = getYearMonthDayRegEx(deadline)._6
+    val boolean = getYearMonthDayRegEx(deadline)._4
 
     yearInserted match{
       case "N/A" => println("No deadline inserted")
@@ -46,15 +53,24 @@ class ToDo (){
 
   }
 
-  def getYearMonthDayRegEx(dateString: String): (String, String, String, String, String, Boolean) = {
-    val dateRegEx = raw"(\d){4}\D(\d){2}\D(\d){2}\D(\d){1,2}\D(\d){2}".r
+  /**
+   *
+   * @param dateString - deadline inserted together with task
+   * @returns year, month and day of the deadline and true if it is correct or
+   * returns appropriate messages and false if it isn't correct
+   */
+  def getYearMonthDayRegEx(dateString: String): (String, String, String, Boolean) = {
+    val dateRegEx = raw"(\d){4}\D(\d){2}\D(\d){2}".r
     dateString match {
-      case dateRegEx(year, month, day, hours, minutes) => (year, month, day, hours, minutes, true)
-      case "" =>("N/A", "N/A", "N/A", "N/A","N/A", true)
-      case _ => ("NO YEAR", "NO MONTH", "NO DAY", "NO HOURS", "NO MINUTES", false)
+      case dateRegEx(year, month, day) => (year, month, day, true)
+      case "" =>("N/A", "N/A", "N/A", true)
+      case _ => ("NO YEAR", "NO MONTH", "NO DAY", false)
     }
   }
 
+  /**
+   * returns the pretty print of remaining tasks
+   */
   def showRemainingTasks(): Unit = {
     val remainingTasks = db.getRemainingTasks
     if (remainingTasks.length == 0) println("No tasks in database!")
@@ -64,6 +80,9 @@ class ToDo (){
     }
   }
 
+  /**
+   * returns the pretty print of finished tasks
+   */
   def showFinishedTasks(): Unit = {
     val finishedTasks = db.getFinishedTasks()
     if (finishedTasks.length == 0) println(s"Go forward! You do not have tasks completed")
@@ -74,6 +93,9 @@ class ToDo (){
     }
   }
 
+  /**
+   * deletes finished tasks by applying to SQL query
+   */
   def deleteFinishedTasks(): Unit = {
     println("Deleting finished tasks")
     db.deleteFinishedTasks
@@ -81,7 +103,7 @@ class ToDo (){
 
   /**
    *
-   * @return updated status in DB
+   * @returns updated status in DB
    */
   def updateTaskStatus(): Unit = {
     //need to show task list, so:
@@ -104,11 +126,17 @@ class ToDo (){
 
   }
 
+  /**
+   * returns print of stats of different statuses
+   */
   def printStats(): Unit = {
     val result = db.getStatsDB
     result.foreach(status => println(status.statusPrettyPrint))
   }
 
+  /**
+   * returns print of most urgent tasks
+   */
   def showUrgentTasks(): Unit = {
     val urgentTasks = db.sortTaskByDate
     println("5 most urgent tasks are:\n")
@@ -116,20 +144,22 @@ class ToDo (){
 
   }
 
-  def displayLongestRunningTasks(): Unit = {
-    val longestRunningTasks = db.longestRunningTasks
-    println("5 longest running tasks are:\n")
-    longestRunningTasks.foreach(task => println(task.getPrettyString))
+  /**
+   * drops table (tasks)
+   */
+  def dropTables(): Unit = {
+    db.dropAllTables()
   }
 
-
   /**
-   * leave the main loop
+   * leaves the main loop
    */
   def quit(): Unit = {
     FinalProject_ToDo_List.userIsActive = false
     println("All is done! See you next time :)")
 
   }
+
+
 
 }
